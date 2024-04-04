@@ -20,11 +20,12 @@ extension Item {
     
     var areBackstagePasses: Bool { name == "Backstage passes to a TAFKAL80ETC concert" }
     var isAgedBrie: Bool { name == "Aged Brie" }
+    var isSulfuras: Bool { name == "Sulfuras, Hand of Ragnaros" }
     
     func updateQuality() {
         if !isAgedBrie && !areBackstagePasses {
             if quality > 0 {
-                if name != "Sulfuras, Hand of Ragnaros" {
+                if !isSulfuras {
                     quality = quality - 1
                 }
             }
@@ -48,7 +49,7 @@ extension Item {
             }
         }
 
-        if name != "Sulfuras, Hand of Ragnaros" {
+        if !isSulfuras {
             sellIn = sellIn - 1
         }
 
@@ -56,7 +57,7 @@ extension Item {
             if !isAgedBrie {
                 if !areBackstagePasses {
                     if quality > 0 {
-                        if name != "Sulfuras, Hand of Ragnaros" {
+                        if !isSulfuras {
                             quality = quality - 1
                         }
                     }
