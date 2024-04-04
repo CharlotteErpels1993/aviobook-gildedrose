@@ -21,6 +21,7 @@ private extension Item {
     var areBackstagePasses: Bool { name == "Backstage passes to a TAFKAL80ETC concert" }
     var canQualityChange: Bool { quality > 0 && quality < 50 && !isSulfuras }
     var isAgedBrie: Bool { name == "Aged Brie" }
+    var isConjured: Bool { name == "Conjured Mana Cake" }
     var isExpired: Bool { sellIn < 0 }
     var isSulfuras: Bool { name == "Sulfuras, Hand of Ragnaros" }
     var qualityIncreasesInTime: Bool { isAgedBrie || areBackstagePasses }
@@ -39,6 +40,10 @@ private extension Item {
         }
         
         if isExpired {
+            modifier *= 2
+        }
+        
+        if isConjured {
             modifier *= 2
         }
         
