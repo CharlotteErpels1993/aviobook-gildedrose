@@ -49,7 +49,7 @@ class GildedRoseTests: XCTestCase {
         XCTAssertEqual(item.quality, 3)
     }
     
-    func testUpdateQuality_WhenQualityOfItemIsZero_AndUpdatingQuality_ThenQualityStaysZero() {
+    func testUpdateQuality_WhenQualityOfItemIsZero_AndUpdatingQuality_ThenQualityOfItemStaysZero() {
         let item = Item(name: "Item", sellIn: 5, quality: 0)
         let app = GildedRose(items: [item])
         app.updateQuality()
@@ -57,7 +57,7 @@ class GildedRoseTests: XCTestCase {
         XCTAssertEqual(item.quality, 0)
     }
     
-    func testUpdateQuality_WhenItemIsAgedBrie_AndUpdatingQuality_ThenQualityIsImproved() {
+    func testUpdateQuality_WhenItemIsAgedBrie_AndUpdatingQuality_ThenQualityOfItemIsImproved() {
         let item = Item(name: "Aged Brie", sellIn: 5, quality: 6)
         let app = GildedRose(items: [item])
         app.updateQuality()
