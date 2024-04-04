@@ -24,26 +24,20 @@ extension Item {
     
     func updateQuality() {
         if !isAgedBrie && !areBackstagePasses {
-            if quality > 0 {
-                if !isSulfuras {
-                    quality = quality - 1
-                }
+            if quality > 0 && !isSulfuras {
+                quality = quality - 1
             }
         } else {
             if quality < 50 {
                 quality = quality + 1
 
                 if areBackstagePasses {
-                    if sellIn < 11 {
-                        if quality < 50 {
-                            quality = quality + 1
-                        }
+                    if sellIn < 11 && quality < 50 {
+                        quality = quality + 1
                     }
 
-                    if sellIn < 6 {
-                        if quality < 50 {
-                            quality = quality + 1
-                        }
+                    if sellIn < 6 && quality < 50 {
+                        quality = quality + 1
                     }
                 }
             }
@@ -64,10 +58,8 @@ extension Item {
                 } else {
                     quality = quality - quality
                 }
-            } else {
-                if quality < 50 {
-                    quality = quality + 1
-                }
+            } else if quality < 50 {
+                quality = quality + 1
             }
         }
     }
