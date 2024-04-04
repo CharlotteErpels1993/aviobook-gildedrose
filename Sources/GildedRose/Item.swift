@@ -16,45 +16,54 @@ extension Item: CustomStringConvertible {
     }
 }
 
-extension Item {
-    
+private extension Item {
     var areBackstagePasses: Bool { name == "Backstage passes to a TAFKAL80ETC concert" }
     var canQualityChange: Bool { quality > 0 && quality < 50 && !isSulfuras }
     var isAgedBrie: Bool { name == "Aged Brie" }
+    var isExpired: Bool { sellIn < 0 }
     var isSulfuras: Bool { name == "Sulfuras, Hand of Ragnaros" }
     var qualityIncreasesInTime: Bool { isAgedBrie || areBackstagePasses }
     
+    func lowerSellInIfPossible() {
+        guard !isSulfuras else { return }
+        sellIn -= 1
+    }
+}
+
+extension Item {
+    
     func updateQuality() {
-        if !isSulfuras {
-            sellIn -= 1
+        lowerSellInIfPossible()
+        
+        guard canQualityChange else { return }
+        
+        if areBackstagePasses && isExpired {
+            quality = 0
+            return
         }
         
-        if canQualityChange {
-            if qualityIncreasesInTime {
-                quality += 1
-                
-                if areBackstagePasses {
-                    if sellIn < 10 {
-                        quality += 1
-                    }
-
-                    if sellIn < 5 {
-                        quality += 1
-                    }
+        if qualityIncreasesInTime {
+            quality += 1
+            
+            if areBackstagePasses {
+                if sellIn < 10 {
+                    quality += 1
                 }
-            } else {
-                quality -= 1
+
+                if sellIn < 5 {
+                    quality += 1
+                }
             }
+        } else {
+            quality -= 1
         }
 
-        if sellIn < 0 {
+        if isExpired {
             if !isAgedBrie {
-                if !areBackstagePasses && canQualityChange {
+                if !areBackstagePasses {
                     quality -= 1
-                } else {
-                    quality = 0
                 }
-            } else if canQualityChange {
+            } else {
                 quality += 1
             }
         }
