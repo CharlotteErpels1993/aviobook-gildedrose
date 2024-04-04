@@ -18,8 +18,10 @@ extension Item: CustomStringConvertible {
 
 extension Item {
     
+    var isAgedBrie: Bool { name == "Aged Brie" }
+    
     func updateQuality() {
-        if name != "Aged Brie" && name != "Backstage passes to a TAFKAL80ETC concert" {
+        if !isAgedBrie && name != "Backstage passes to a TAFKAL80ETC concert" {
             if quality > 0 {
                 if name != "Sulfuras, Hand of Ragnaros" {
                     quality = quality - 1
@@ -50,7 +52,7 @@ extension Item {
         }
 
         if sellIn < 0 {
-            if name != "Aged Brie" {
+            if !isAgedBrie {
                 if name != "Backstage passes to a TAFKAL80ETC concert" {
                     if quality > 0 {
                         if name != "Sulfuras, Hand of Ragnaros" {
