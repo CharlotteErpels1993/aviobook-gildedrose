@@ -88,4 +88,60 @@ class GildedRoseTests: XCTestCase {
         
         XCTAssertEqual(item.quality, 30)
     }
+    
+    func testUpdateQuality_WhenItemIsBackstagePasses_AndItemSellInIsIn11Days_AndUpdatingQuality_ThenQualityOfItemIsIncreasedBy1() {
+        let item = Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 11, quality: 5)
+        let app = GildedRose(items: [item])
+        app.updateQuality()
+        
+        XCTAssertEqual(item.quality, 6)
+    }
+    
+    func testUpdateQuality_WhenItemIsBackstagePasses_AndItemSellInIsIn10Days_AndUpdatingQuality_ThenQualityOfItemIsIncreasedBy2() {
+        let item = Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 5)
+        let app = GildedRose(items: [item])
+        app.updateQuality()
+        
+        XCTAssertEqual(item.quality, 7)
+    }
+    
+    func testUpdateQuality_WhenItemIsBackstagePasses_AndItemSellInIsIn9Days_AndUpdatingQuality_ThenQualityOfItemIsIncreasedBy2() {
+        let item = Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 9, quality: 5)
+        let app = GildedRose(items: [item])
+        app.updateQuality()
+        
+        XCTAssertEqual(item.quality, 7)
+    }
+    
+    func testUpdateQuality_WhenItemIsBackstagePasses_AndItemSellInIsIn6Days_AndUpdatingQuality_ThenQualityOfItemIsIncreasedBy2() {
+        let item = Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 6, quality: 5)
+        let app = GildedRose(items: [item])
+        app.updateQuality()
+        
+        XCTAssertEqual(item.quality, 7)
+    }
+    
+    func testUpdateQuality_WhenItemIsBackstagePasses_AndItemSellInIsIn5Days_AndUpdatingQuality_ThenQualityOfItemIsIncreasedBy3() {
+        let item = Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 5, quality: 5)
+        let app = GildedRose(items: [item])
+        app.updateQuality()
+        
+        XCTAssertEqual(item.quality, 8)
+    }
+    
+    func testUpdateQuality_WhenItemIsBackstagePasses_AndItemSellInIsIn4Days_AndUpdatingQuality_ThenQualityOfItemIsIncreasedBy3() {
+        let item = Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 4, quality: 5)
+        let app = GildedRose(items: [item])
+        app.updateQuality()
+        
+        XCTAssertEqual(item.quality, 8)
+    }
+    
+    func testUpdateQuality_WhenItemIsBackstagePasses_AndItemSellInIsNow_AndUpdatingQuality_ThenQualityOfItemIs0() {
+        let item = Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 0, quality: 5)
+        let app = GildedRose(items: [item])
+        app.updateQuality()
+        
+        XCTAssertEqual(item.quality, 0)
+    }
 }
