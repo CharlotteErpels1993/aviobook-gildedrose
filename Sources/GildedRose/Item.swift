@@ -17,12 +17,38 @@ extension Item: CustomStringConvertible {
 }
 
 private extension Item {
+
     var areBackstagePasses: Bool { name == "Backstage passes to a TAFKAL80ETC concert" }
     var canQualityChange: Bool { quality > 0 && quality < 50 && !isSulfuras }
     var isAgedBrie: Bool { name == "Aged Brie" }
     var isExpired: Bool { sellIn < 0 }
     var isSulfuras: Bool { name == "Sulfuras, Hand of Ragnaros" }
     var qualityIncreasesInTime: Bool { isAgedBrie || areBackstagePasses }
+    
+    func calculateQualityModifier() -> Int {
+        var modifier = 0
+
+        if qualityIncreasesInTime {
+            modifier += 1
+            
+            if areBackstagePasses {
+                modifier += calculateBackstagePassesQualityModifier()
+            }
+        } else {
+            modifier -= 1
+        }
+        
+        if isExpired {
+            modifier *= 2
+        }
+        
+        return modifier
+    }
+    
+    func calculateBackstagePassesQualityModifier() -> Int {
+        guard sellIn < 10 else { return 0 }
+        return sellIn < 5 ? 2 : 1
+    }
     
     func lowerSellInIfPossible() {
         guard !isSulfuras else { return }
@@ -42,30 +68,7 @@ extension Item {
             return
         }
         
-        if qualityIncreasesInTime {
-            quality += 1
-            
-            if areBackstagePasses {
-                if sellIn < 10 {
-                    quality += 1
-                }
-
-                if sellIn < 5 {
-                    quality += 1
-                }
-            }
-        } else {
-            quality -= 1
-        }
-
-        if isExpired {
-            if !isAgedBrie {
-                if !areBackstagePasses {
-                    quality -= 1
-                }
-            } else {
-                quality += 1
-            }
-        }
+        let qualityModifier = calculateQualityModifier()
+        quality += qualityModifier
     }
 }
