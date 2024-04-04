@@ -19,18 +19,16 @@ extension Item: CustomStringConvertible {
 extension Item {
     
     var areBackstagePasses: Bool { name == "Backstage passes to a TAFKAL80ETC concert" }
+    var canQualityChange: Bool { quality > 0 && quality < 50 && !isSulfuras }
     var isAgedBrie: Bool { name == "Aged Brie" }
     var isSulfuras: Bool { name == "Sulfuras, Hand of Ragnaros" }
+    var qualityIncreasesInTime: Bool { isAgedBrie || areBackstagePasses }
     
     func updateQuality() {
-        if !isAgedBrie && !areBackstagePasses {
-            if quality > 0 && !isSulfuras {
-                quality -= 1
-            }
-        } else {
-            if quality < 50 {
+        if canQualityChange {
+            if qualityIncreasesInTime {
                 quality += 1
-
+                
                 if areBackstagePasses {
                     if sellIn < 11 {
                         quality += 1
@@ -40,6 +38,8 @@ extension Item {
                         quality += 1
                     }
                 }
+            } else {
+                quality -= 1
             }
         }
 
@@ -49,12 +49,12 @@ extension Item {
 
         if sellIn < 0 {
             if !isAgedBrie {
-                if !areBackstagePasses && quality > 0 && !isSulfuras {
+                if !areBackstagePasses && canQualityChange {
                     quality -= 1
                 } else {
                     quality = 0
                 }
-            } else if quality < 50 {
+            } else if canQualityChange {
                 quality += 1
             }
         }
