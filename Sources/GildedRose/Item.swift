@@ -18,10 +18,11 @@ extension Item: CustomStringConvertible {
 
 extension Item {
     
+    var areBackstagePasses: Bool { name == "Backstage passes to a TAFKAL80ETC concert" }
     var isAgedBrie: Bool { name == "Aged Brie" }
     
     func updateQuality() {
-        if !isAgedBrie && name != "Backstage passes to a TAFKAL80ETC concert" {
+        if !isAgedBrie && !areBackstagePasses {
             if quality > 0 {
                 if name != "Sulfuras, Hand of Ragnaros" {
                     quality = quality - 1
@@ -31,7 +32,7 @@ extension Item {
             if quality < 50 {
                 quality = quality + 1
 
-                if name == "Backstage passes to a TAFKAL80ETC concert" {
+                if areBackstagePasses {
                     if sellIn < 11 {
                         if quality < 50 {
                             quality = quality + 1
@@ -53,7 +54,7 @@ extension Item {
 
         if sellIn < 0 {
             if !isAgedBrie {
-                if name != "Backstage passes to a TAFKAL80ETC concert" {
+                if !areBackstagePasses {
                     if quality > 0 {
                         if name != "Sulfuras, Hand of Ragnaros" {
                             quality = quality - 1
