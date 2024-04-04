@@ -32,4 +32,20 @@ class GildedRoseTests: XCTestCase {
         
         XCTAssertEqual(items.map({ $0.quality }), [4, 6])
     }
+    
+    func testUpdateQuality_WhenSellInOfItemIsZero_AndUpdatingQuality_ThenQualityOfItemIsLoweredTwice() {
+        let item = Item(name: "Item", sellIn: 0, quality: 5)
+        let app = GildedRose(items: [item])
+        app.updateQuality()
+        
+        XCTAssertEqual(item.quality, 3)
+    }
+    
+    func testUpdateQuality_WhenSellInOfItemIsNegative_AndUpdatingQuality_ThenQualityOfItemIsLoweredTwice() {
+        let item = Item(name: "Item", sellIn: -1, quality: 5)
+        let app = GildedRose(items: [item])
+        app.updateQuality()
+        
+        XCTAssertEqual(item.quality, 3)
+    }
 }
