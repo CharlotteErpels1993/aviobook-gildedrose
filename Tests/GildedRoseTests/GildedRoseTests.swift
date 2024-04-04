@@ -144,4 +144,20 @@ class GildedRoseTests: XCTestCase {
         
         XCTAssertEqual(item.quality, 0)
     }
+    
+    func testUpdateQuality_WhenItemIsConjured_AndSellInIsPositive_AndUpdatingQualityIsLoweredBy2() {
+        let item = Item(name: "Conjured Mana Cake", sellIn: 5, quality: 9)
+        let app = GildedRose(items: [item])
+        app.updateQuality()
+        
+        XCTAssertEqual(item.quality, 7)
+    }
+    
+    func testUpdateQuality_WhenItemIsConjured_AndSellInIsZero_AndUpdatingQualityIsLoweredBy4() {
+        let item = Item(name: "Conjured Mana Cake", sellIn: 0, quality: 9)
+        let app = GildedRose(items: [item])
+        app.updateQuality()
+        
+        XCTAssertEqual(item.quality, 5)
+    }
 }
