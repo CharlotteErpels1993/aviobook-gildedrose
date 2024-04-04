@@ -25,26 +25,26 @@ extension Item {
     var qualityIncreasesInTime: Bool { isAgedBrie || areBackstagePasses }
     
     func updateQuality() {
+        if !isSulfuras {
+            sellIn -= 1
+        }
+        
         if canQualityChange {
             if qualityIncreasesInTime {
                 quality += 1
                 
                 if areBackstagePasses {
-                    if sellIn < 11 {
+                    if sellIn < 10 {
                         quality += 1
                     }
 
-                    if sellIn < 6 {
+                    if sellIn < 5 {
                         quality += 1
                     }
                 }
             } else {
                 quality -= 1
             }
-        }
-
-        if !isSulfuras {
-            sellIn -= 1
         }
 
         if sellIn < 0 {
